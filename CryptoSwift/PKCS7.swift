@@ -18,7 +18,7 @@ public struct PKCS7: Padding {
     }
     
     public func add(bytes: [UInt8] , blockSize:Int) -> [UInt8] {
-        var padding = UInt8(blockSize - (bytes.count % blockSize))
+        let padding = UInt8(blockSize - (bytes.count % blockSize))
         var withPadding = bytes
         if (padding == 0) {
             // If the original data is a multiple of N bytes, then an extra block of bytes with value N is added.
@@ -35,7 +35,7 @@ public struct PKCS7: Padding {
     }
     
     public func remove(bytes: [UInt8], blockSize:Int? = nil) -> [UInt8] {
-        var padding = Int(bytes.last!) // last byte
+        let padding = Int(bytes.last!) // last byte
         
         if padding >= 1 { //TODO: need test for that, what about empty padding
             return Array(bytes[0..<(bytes.count - padding)])

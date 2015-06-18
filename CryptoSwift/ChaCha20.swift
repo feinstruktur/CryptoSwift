@@ -79,17 +79,18 @@ final public class ChaCha20 {
 
         for i in 0..<16 {
             x[i] = x[i] &+ input[i]
-            output += [UInt8((x[i] & 0xFFFFFFFF) >> 24),
-                       UInt8((x[i] & 0xFFFFFF) >> 16),
-                       UInt8((x[i] & 0xFFFF) >> 8),
-                       UInt8((x[i] & 0xFF) >> 0)]
+            let a0 = UInt8((x[i] & 0xFFFFFFFF) >> 24)
+            let a1 = UInt8((x[i] & 0xFFFFFF) >> 16)
+            let a2 = UInt8((x[i] & 0xFFFF) >> 8)
+            let a3 = UInt8((x[i] & 0xFF) >> 0)
+            output += [a0, a1, a2, a3]
         }
 
         return output;
     }
         
-    private func contextSetup(# iv:[UInt8], key:[UInt8]) -> Context? {
-        var ctx = Context()
+    private func contextSetup(iv  iv:[UInt8], key:[UInt8]) -> Context? {
+        let ctx = Context()
         let kbits = key.count * 8
         
         if (kbits != 128 && kbits != 256) {
@@ -173,16 +174,16 @@ final public class ChaCha20 {
     
     private final func quarterround(inout a:UInt32, inout _ b:UInt32, inout _ c:UInt32, inout _ d:UInt32) {
         a = a &+ b
-        d = rotateLeft((d ^ a), 16)
+        d = rotateLeft((d ^ a), n: 16)
         
         c = c &+ d
-        b = rotateLeft((b ^ c), 12);
+        b = rotateLeft((b ^ c), n: 12);
         
         a = a &+ b
-        d = rotateLeft((d ^ a), 8);
+        d = rotateLeft((d ^ a), n: 8);
 
         c = c &+ d
-        b = rotateLeft((b ^ c), 7);
+        b = rotateLeft((b ^ c), n: 7);
     }
 }
 

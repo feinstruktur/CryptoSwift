@@ -48,7 +48,7 @@ final class ChaCha20Tests: XCTestCase {
         for (var idx = 0; idx < keys.count; idx++) {
             
             let expectedHex = expectedHexes[idx]
-            let message = [UInt8](count: (count(expectedHex) / 2), repeatedValue: 0)
+            let message = [UInt8](count: (expectedHex.characters.count / 2), repeatedValue: 0)
             
             let setup = (key: keys[idx], iv: ivs[idx])
             var encrypted = Cipher.ChaCha20(setup).encrypt(message)

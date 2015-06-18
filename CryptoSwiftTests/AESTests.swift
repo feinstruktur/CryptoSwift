@@ -99,7 +99,7 @@ final class AESTests: XCTestCase {
         
         var substituted = input
         AES(key: aesKey, blockMode: .CBC)!.subBytes(&substituted)
-        XCTAssertTrue(compareMatrix(expected, substituted), "subBytes failed")
+        XCTAssertTrue(compareMatrix(expected, b: substituted), "subBytes failed")
         let inverted = AES(key: aesKey, blockMode: .CBC)!.invSubBytes(substituted)
         XCTAssertTrue(compareMatrix(input, inverted), "invSubBytes failed")
     }
